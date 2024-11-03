@@ -8,10 +8,13 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class TipoIvaService {
-  private http = inject(HttpClient)
-  private baseURL:string = appsettings.apiUrl;
+  private http = inject(HttpClient);
+  private baseURL: string = appsettings.apiUrl;
+
   constructor() { }
-  lista(): Observable<ResponseTipoIva> {
-    return this.http.get<ResponseTipoIva>(`${this.baseURL}tipoiva`)
+
+  // Actualizar el método para que acepte codempresa como parámetro
+  getTipoIva(codEmpresa: number): Observable<ResponseTipoIva> {
+    return this.http.get<ResponseTipoIva>(`${this.baseURL}tipoiva?codempresa=${codEmpresa}`);
   }
 }

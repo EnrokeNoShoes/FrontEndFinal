@@ -1,26 +1,31 @@
 <div class="card-container">
-    <mat-card>
-         <mat-card-header>
-              <mat-card-title>Iniciar Sesion</mat-card-title>
-         </mat-card-header>
-         <mat-card-content>
-              <form class="form-custom" [formGroup]="fromAcceso">
-                   <mat-form-field class="input-custom">
-                        <mat-label>Usuario</mat-label>
-                        <input matInput formControlName="NomUsu">
-                   </mat-form-field>
-                   <mat-form-field class="input-custom">
-                        <mat-label>Contraseña</mat-label>
-                        <input matInput formControlName="PassUsu" type="PassUsu">
-                   </mat-form-field>
-                   <mat-form-field class="input-custom">
-                    <mat-label>Codempresa</mat-label>
-                    <input matInput formControlName="codempresa" type="codempresa">
-               </mat-form-field>
-                   <div class="flex">
-                        <button mat-flat-button color="primary" (click)="iniciarSesion()">Iniciar Sesion</button>
-                   </div>
-              </form>
-         </mat-card-content>
-    </mat-card>
-</div>
+     <mat-card>
+       <mat-card-header>
+         <mat-card-title>Iniciar Sesión</mat-card-title>
+       </mat-card-header>
+       <mat-card-content>
+         <form class="form-custom" [formGroup]="fromAcceso">
+           <mat-form-field class="input-custom">
+             <mat-label>Usuario</mat-label>
+             <input matInput formControlName="NomUsu">
+           </mat-form-field>
+           <mat-form-field class="input-custom">
+             <mat-label>Contraseña</mat-label>
+             <input matInput formControlName="PassUsu" type="password">
+           </mat-form-field>
+           <mat-form-field appearance="fill">
+               <mat-label>Empresa</mat-label>
+               <mat-select formControlName="codempresa" (selectionChange)="onEmpresaChange($event)">
+                 <mat-option *ngFor="let empresa of empresas" [value]="empresa.codempresa">
+                   {{ empresa.ruc_ci }} - {{ empresa.razonsocial }}
+                 </mat-option>
+               </mat-select>
+           </mat-form-field>                      
+           <div class="flex">
+             <button mat-flat-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+           </div>
+         </form>
+       </mat-card-content>
+     </mat-card>
+   </div>
+   
