@@ -1,7 +1,7 @@
 <div class="card-container">
      <mat-card>
-       <mat-card-header>
-         <mat-card-title>Iniciar Sesión</mat-card-title>
+       <mat-card-header class="titulos">
+         <mat-card-title ><h3>Acceso Usuario</h3></mat-card-title>
        </mat-card-header>
        <mat-card-content>
          <form class="form-custom" [formGroup]="fromAcceso">
@@ -13,7 +13,7 @@
              <mat-label>Contraseña</mat-label>
              <input matInput formControlName="PassUsu" type="password">
            </mat-form-field>
-           <mat-form-field appearance="fill">
+           <mat-form-field appearance="fill" class = "fill">
                <mat-label>Empresa</mat-label>
                <mat-select formControlName="codempresa" (selectionChange)="onEmpresaChange($event)">
                  <mat-option *ngFor="let empresa of empresas" [value]="empresa.codempresa">
