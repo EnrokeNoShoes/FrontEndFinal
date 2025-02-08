@@ -13,8 +13,8 @@ export class TipoIvaService {
 
   constructor() { }
 
-  // Actualizar el método para que acepte codempresa como parámetro
-  getTipoIva(codEmpresa: number): Observable<ResponseTipoIva> {
-    return this.http.get<ResponseTipoIva>(`${this.baseURL}tipoiva?codempresa=${codEmpresa}`);
+  // Método sin dependencia de codempresa
+  getTipoIva(): Observable<ResponseTipoIva> {
+    return this.http.get<ResponseTipoIva>(`${this.baseURL}tipoiva/lista`);
   }
 }

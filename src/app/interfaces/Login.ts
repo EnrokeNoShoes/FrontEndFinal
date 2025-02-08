@@ -1,6 +1,6 @@
 export interface Login{
     NomUsu:string,
     PassUsu:string,
-    codempresa:number
+    codSucursal:number
 
 }

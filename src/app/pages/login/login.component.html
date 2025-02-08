@@ -14,10 +14,10 @@
              <input matInput formControlName="PassUsu" type="password">
            </mat-form-field>
            <mat-form-field appearance="fill" class = "fill">
-               <mat-label>Empresa</mat-label>
-               <mat-select formControlName="codempresa" (selectionChange)="onEmpresaChange($event)">
-                 <mat-option *ngFor="let empresa of empresas" [value]="empresa.codempresa">
-                   {{ empresa.ruc_ci }} - {{ empresa.razonsocial }}
+               <mat-label>Sucursal</mat-label>
+               <mat-select formControlName="codSucursal" (selectionChange)="onSucursalChange($event)">
+                 <mat-option *ngFor="let sucursal of filteredSucursales" [value]="sucursal.codsucursal">
+                   {{ sucursal.numsuc }} - {{ sucursal.dessucu}}
                  </mat-option>
                </mat-select>
            </mat-form-field>                      

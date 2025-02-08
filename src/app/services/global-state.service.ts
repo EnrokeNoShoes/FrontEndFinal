@@ -5,17 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class GlobalStateService {
-  private codEmpresaSubject = new BehaviorSubject<number | null>(null);
-  private razonsocialSubject = new BehaviorSubject<string | null>(null);
+  private codSucursalSubject = new BehaviorSubject<number | null>(null);
+  private numSucursalSubject = new BehaviorSubject<string | null>(null);
 
-  codemp$ = this.codEmpresaSubject.asObservable();
-  razonsocial$ = this.razonsocialSubject.asObservable();
+  codsuc$ = this.codSucursalSubject.asObservable();
+  numsuc$ = this.numSucursalSubject.asObservable();
 
-  setCodEmpresa(codemp: number) {
-    this.codEmpresaSubject.next(codemp);
+  setCodSucursal(codsuc: number) {
+    this.codSucursalSubject.next(codsuc);
   }
 
-  setRazonsocial(nombre: string) {
-    this.razonsocialSubject.next(nombre);
+  setNumSucursal(numsuc: string) {
+    this.numSucursalSubject.next(numsuc);
   }
 }

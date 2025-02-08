@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AccesoService } from '../../services/acceso.service';
-import { EmpresaService } from '../../services/empresa.service';
+import { SucursalService } from '../../services/sucursal.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Login } from '../../interfaces/Login';
-import { Empresa } from '../../interfaces/Empresa'; // Interfaz de empresa
+import { Sucursal } from '../../interfaces/Sucursal'; // Interfaz de empresa
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,42 +30,48 @@ import { GlobalStateService } from '../../services/global-state.service';; // Im
 })
 export class LoginComponent implements OnInit {
   private accesoService = inject(AccesoService);
-  private empresaService = inject(EmpresaService);
+  private sucursalService = inject(SucursalService);
   private router = inject(Router);
   private globalStateService = inject(GlobalStateService); // Inyectar el servicio global
   public formBuild = inject(FormBuilder);
 
-  public empresas: Empresa[] = []; // Array de empresas
-  public filteredEmpresas: Empresa[] = []; // Array para empresas filtradas
+  public sucursales: Sucursal[] = []; // Array de empresas
+  public filteredSucursales: Sucursal[] = []; // Array para empresas filtradas
 
   public fromAcceso: FormGroup = this.formBuild.group({
     NomUsu: ['', Validators.required],
     PassUsu: ['', Validators.required],
-    codempresa: ['', Validators.required] // Campo para el código de empresa
+    codSucursal: ['', Validators.required] // Campo para el código de empresa
   });
 
   ngOnInit() {
-    this.empresaService.getEmpresas().subscribe({
-      next: (data: Empresa[]) => {
-        this.empresas = data;
-        this.filteredEmpresas = data; // Inicializa filteredEmpresas con todas las empresas
+    this.sucursalService.getSucursal().subscribe({
+      next: (data: Sucursal[]) => {
+        console.log('Sucursales recibidas:', data); // 🔍 Verifica la estructura
+        this.sucursales = data;
+        this.filteredSucursales = data;
       },
-      error: (err) => console.error('Error al cargar empresas:', err)
+      error: (err) => console.error('Error al cargar las sucursales:', err)
     });
   }
+  
+  
 
-  onEmpresaChange(event: MatSelectChange) {
-    const selectedCodEmpresa = event.value; // Ahora es el código de la empresa
-    
-    // Validación más robusta
-    if (Number.isInteger(selectedCodEmpresa)) {
-      this.fromAcceso.patchValue({ codempresa: selectedCodEmpresa }); // Actualiza solo el código
-      this.globalStateService.setCodEmpresa(selectedCodEmpresa); // Actualiza el servicio global
-    } else {
-      console.error('Código de empresa inválido:', selectedCodEmpresa);
-      alert('Por favor, selecciona una empresa válida.');
-    }
+  onSucursalChange(event: MatSelectChange) {
+  console.log('Evento de selección detectado:', event);
+  console.log('Valor seleccionado:', event.value);
+
+  if (event.value) {
+    this.fromAcceso.patchValue({ codSucursal: event.value });
+    this.globalStateService.setCodSucursal(event.value);
+    console.log('Formulario actualizado:', this.fromAcceso.value);
+  } else {
+    console.error('Código de sucursal inválido:', event.value);
+    alert('Por favor, selecciona una sucursal válida.');
   }
+}
+
+  
   
   iniciarSesion() {
     if (this.fromAcceso.invalid) {
@@ -75,7 +81,7 @@ export class LoginComponent implements OnInit {
     const objeto: Login = {
       NomUsu: this.fromAcceso.value.NomUsu,
       PassUsu: this.fromAcceso.value.PassUsu,
-      codempresa: this.fromAcceso.value.codempresa
+      codSucursal: this.fromAcceso.value.codSucursal
     };
 
     this.accesoService.login(objeto).subscribe({
@@ -94,10 +100,10 @@ export class LoginComponent implements OnInit {
   }
 
   // Función para filtrar empresas según la entrada del usuario (opcional)
-  filterEmpresas(value: string) {
-    this.filteredEmpresas = this.empresas.filter(empresa =>
-      empresa.ruc_ci.toLowerCase().includes(value.toLowerCase()) ||
-      empresa.razonsocial.toLowerCase().includes(value.toLowerCase())
+  filterSucursal(value: string) {
+    this.filteredSucursales = this.sucursales.filter(sucursal =>
+      sucursal.numsuc.toLowerCase().includes(value.toLowerCase()) ||
+      sucursal.dessucu.toLowerCase().includes(value.toLowerCase())
     );
   }
 }

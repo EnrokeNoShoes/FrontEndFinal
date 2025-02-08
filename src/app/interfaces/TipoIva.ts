@@ -6,5 +6,4 @@ export interface TipoIva {
     desiva: string;
     coheficiente: number; // Mantener como 'number'
     codUsuario: number;
-    codempresa: number;
 }
