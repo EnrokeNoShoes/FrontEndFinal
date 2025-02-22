@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../settings/appsettings';
-import { ResponseTipoIva } from '../interfaces/ResponseTipoIva';
+import { appsettings } from '../../settings/appsettings';
+import { ResponseTipoIva } from '../../interfaces/ResponseTipoIva';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({

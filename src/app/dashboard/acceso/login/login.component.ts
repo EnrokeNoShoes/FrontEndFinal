@@ -1,17 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AccesoService } from '../../services/acceso.service';
-import { SucursalService } from '../../services/sucursal.service';
+import { AccesoService } from '../../../services/acceso/acceso.service';
+import { SucursalService } from '../../../services/referenciales/sucursal.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Login } from '../../interfaces/Login';
-import { Sucursal } from '../../interfaces/Sucursal'; // Interfaz de empresa
+import { Login } from '../../../interfaces/Login';
+import { Sucursal } from '../../../interfaces/Sucursal'; // Interfaz de empresa
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { GlobalStateService } from '../../services/global-state.service';; // Importar el servicio global
+import { GlobalStateService } from '../../../services/global-state.service';; // Importar el servicio global
 
 @Component({
   selector: 'app-login',
