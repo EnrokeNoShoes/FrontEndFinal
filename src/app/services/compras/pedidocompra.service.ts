@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../../settings/appsettings';
-import { ResponseTipoIva } from '../../interfaces/referenciales/ResponseTipoIva';
+import { ResponsePedidoCompra } from '../../interfaces/compras/ResponsePedidoCompra';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TipoIvaService {
+export class PedidoCompraService {
   private http = inject(HttpClient);
   private baseURL: string = appsettings.apiUrl;
 
-  constructor() { }
+  constructor() {}
 
-  // Método sin dependencia de codempresa
-  getTipoIva(): Observable<ResponseTipoIva> {
-    return this.http.get<ResponseTipoIva>(`${this.baseURL}tipoiva/lista`);
+  obtenerPedidos(): Observable<ResponsePedidoCompra> {
+    return this.http.get<ResponsePedidoCompra>(`${this.baseURL}pedidocompra/lista`);
   }
+
 }

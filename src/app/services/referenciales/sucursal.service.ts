@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { appsettings } from '../../settings/appsettings';
 import { Observable } from 'rxjs';
-import { Sucursal } from '../../interfaces/Sucursal';
+import { Sucursal } from '../../interfaces/referenciales/Sucursal';
 
 @Injectable({
   providedIn: 'root'

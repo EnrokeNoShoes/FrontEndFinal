@@ -4,7 +4,7 @@ import { SucursalService } from '../../../services/referenciales/sucursal.servic
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Login } from '../../../interfaces/Login';
-import { Sucursal } from '../../../interfaces/Sucursal'; // Interfaz de empresa
+import { Sucursal } from '../../../interfaces/referenciales/Sucursal'; // Interfaz de empresa
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -73,31 +73,32 @@ export class LoginComponent implements OnInit {
 
   
   
-  iniciarSesion() {
-    if (this.fromAcceso.invalid) {
-      return;
-    }
-
-    const objeto: Login = {
-      NomUsu: this.fromAcceso.value.NomUsu,
-      PassUsu: this.fromAcceso.value.PassUsu,
-      codSucursal: this.fromAcceso.value.codSucursal
-    };
-
-    this.accesoService.login(objeto).subscribe({
-      next: (data) => {
-        if (data.isSuccess) {
-          localStorage.setItem("token", data.token);
-          this.router.navigate(['tipoiva']);
-        } else {
-          alert("Credenciales son incorrectas");
-        }
-      },
-      error: (error) => {
-        console.log(error.message);
-      }
-    });
+iniciarSesion() {
+  if (this.fromAcceso.invalid) {
+    return;
   }
+
+  const objeto: Login = {
+    NomUsu: this.fromAcceso.value.NomUsu,
+    PassUsu: this.fromAcceso.value.PassUsu,
+    codSucursal: this.fromAcceso.value.codSucursal
+  };
+
+  this.accesoService.login(objeto).subscribe({
+    next: (data) => {
+      if (data.isSuccess) {
+        localStorage.setItem("token", data.token);
+        this.router.navigate(['pedidocompra']); 
+      } else {
+        alert("Credenciales incorrectas");
+      }
+    },
+    error: (error) => {
+      console.log(error.message);
+    }
+  });
+}
+
 
   // Función para filtrar empresas según la entrada del usuario (opcional)
   filterSucursal(value: string) {
@@ -107,3 +108,5 @@ export class LoginComponent implements OnInit {
     );
   }
 }
+
+

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { TipoIvaService } from '../../../services/referenciales/tipo-iva.service';
-import { TipoIva } from '../../../interfaces/TipoIva';
+import { TipoIva } from '../../../interfaces/referenciales/TipoIva';
 import { CommonModule } from '@angular/common';
 
 @Component({
