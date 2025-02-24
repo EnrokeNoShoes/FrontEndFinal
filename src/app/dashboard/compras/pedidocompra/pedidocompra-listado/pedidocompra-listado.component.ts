@@ -108,15 +108,14 @@ export class PedidosComponent implements OnInit {
   }
 
   // Función para filtrar pedidos según el campo de filtro
-  filtrarPedidos() {
-    if (this.filtroForm.invalid) {
-      return;
-    }
-    const filtro = this.filtroForm.value.numcomprobantepc;
-    this.pedidosFiltrados = this.pedidos.filter((pedido) =>
-      pedido.numcomprobantepc.toLowerCase().includes(filtro.toLowerCase())
-    );
+  filtrarPedidos() {  
+    const filtro = this.filtro.toLowerCase();
+    this.pedidosFiltrados = this.pedidos.filter((pedido) => {
+      const numComprobantePc = pedido.numcomprobantepc?.toString().toLowerCase() || '';
+      return numComprobantePc.includes(filtro);
+    });
   }
+  
 
   // Modificar un pedido
   modificarPedido(pedido: MPedidoCompra) {
