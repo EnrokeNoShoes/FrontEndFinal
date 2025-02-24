@@ -17,4 +17,8 @@ export class PedidoCompraService {
     return this.http.get<ResponsePedidoCompra>(`${this.baseURL}pedidocompra/lista`);
   }
 
+  anularPedido(codpedidocompra: number, codestado: number): Observable<any> {
+    const url = `${this.baseURL}pedidocompra/anular?codpedidocompra=${codpedidocompra}&codestado=${codestado}`;
+    return this.http.put(url, {}); // Enviamos un body vacío ya que solo usamos la URL
+  }    
 }

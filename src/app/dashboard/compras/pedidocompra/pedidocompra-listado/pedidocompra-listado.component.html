@@ -1,22 +1,28 @@
 <div class="card-container">
     <mat-card>
-        <mat-card-header>
-            <mat-card-title>Listado de Pedidos de Compra</mat-card-title>
+        <mat-card-header class="header">
+            <mat-card-title>PEDIDO COMPRA</mat-card-title>
+            <button mat-raised-button color="primary" (click)="nuevoRegistro()">Nuevo Registro</button>
         </mat-card-header>
+
         <mat-card-content>
-            <table mat-table [dataSource]="pedidos" class="mat-elevation-z8">
+            <mat-form-field appearance="outline" class="full-width">
+                <input matInput [(ngModel)]="filtro" (input)="filtrarPedidos()" placeholder="Buscar número pedido">
+            </mat-form-field>
+
+            <table mat-table [dataSource]="pedidosFiltrados" class="mat-elevation-z8">
                 <ng-container matColumnDef="numcomprobantepc">
-                    <th mat-header-cell *matHeaderCellDef> Nro. Pedido </th>
+                    <th mat-header-cell *matHeaderCellDef> Num. Pedido </th>
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.numcomprobantepc }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="numcomprobante">
-                    <th mat-header-cell *matHeaderCellDef> Nº Comprobante </th>
+                    <th mat-header-cell *matHeaderCellDef> Tipo Comprobante </th>
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.numcomprobante }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="numsuc">
-                    <th mat-header-cell *matHeaderCellDef> Nº Sucursal </th>
+                    <th mat-header-cell *matHeaderCellDef> Sucursal </th>
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.numsuc }} </td>
                 </ng-container>
 
@@ -25,10 +31,15 @@
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.dessuc }} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="nomusu">
+                    <th mat-header-cell *matHeaderCellDef> Usuario Carga </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.nomusu }} </td>
+                </ng-container>
+
                 <ng-container matColumnDef="fechapedido">
-                    <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                    <th mat-header-cell *matHeaderCellDef> Fecha Ingreso </th>
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.fechapedido }} </td>
-                </ng-container>        
+                </ng-container>
 
                 <ng-container matColumnDef="desestado">
                     <th mat-header-cell *matHeaderCellDef> Estado </th>
@@ -37,12 +48,22 @@
 
                 <ng-container matColumnDef="acciones">
                     <th mat-header-cell *matHeaderCellDef> Opciones </th>
-                    <td mat-cell *matCellDef="let pedido"> {{ pedido.acciones }} </td>
+                    <td mat-cell *matCellDef="let pedido">
+                        <button mat-icon-button color="primary" (click)="modificarPedido(pedido)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="anularPedido(pedido.codpedidocompra)">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                        <button mat-icon-button color="accent" (click)="imprimirPedido(pedido)">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </td>
                 </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-
         </mat-card-content>
     </mat-card>
 </div>
