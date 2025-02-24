@@ -18,6 +18,11 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
+            <mat-label>Nro. Sucursal</mat-label>
+            <input matInput [(ngModel)]="pedido.numsuc" name="numsuc" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
             <mat-label>Tipo Comprobante</mat-label>
             <input matInput [(ngModel)]="pedido.numcomprobante" name="numcomprobante" required>
           </mat-form-field>
@@ -49,6 +54,7 @@
             <mat-label>Cantidad</mat-label>
             <input matInput type="number" [(ngModel)]="nuevoDetalle.cantidad" name="cantidad">
           </mat-form-field>
+          
         </div>
 
         <button mat-raised-button color="primary" class="add-button" (click)="agregarLinea()">Agregar Línea</button>
@@ -63,7 +69,12 @@
 
             <ng-container matColumnDef="descripcion">
               <th mat-header-cell *matHeaderCellDef> Descripción </th>
-              <td mat-cell *matCellDef="let detalle"> {{ detalle.descriarticulo }} </td>
+              <td mat-cell *matCellDef="let detalle"> {{ detalle.desproducto }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="costoultimo">
+              <th mat-header-cell *matHeaderCellDef> Costo Ultimo </th>
+              <td mat-cell *matCellDef="let detalle"> {{ detalle.costoultimo }} </td>
             </ng-container>
 
             <ng-container matColumnDef="cantidad">
@@ -94,12 +105,10 @@
         <!-- Sección de Totales del Pedido -->
         <div class="total-section">
           <div>
+            <span>Total gs:</span><br><br>
+            <!--<span>{{ calcularTotal() | currency }}</span>-->
             <span>Cantidad:</span>
             <span>{{ pedido.detalles.length }}</span>
-          </div>
-          <div>
-            <span>Total gs:</span>
-            <!--<span>{{ calcularTotal() | currency }}</span>-->
           </div>
         </div>
       </form>

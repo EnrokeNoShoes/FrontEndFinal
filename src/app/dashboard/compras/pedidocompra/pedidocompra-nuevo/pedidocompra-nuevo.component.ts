@@ -47,10 +47,10 @@ export class PedidoCompraFormComponent implements OnInit {
     codigobarra: '',
     desproducto: '',
     cantidad: 1,
-    costoulitmo: 0
+    costoultimo: 0
   };
   
-  public displayedColumns: string[] = ['codbarra', 'descripcion', 'cantidad', 'acciones'];
+  public displayedColumns: string[] = ['codbarra', 'descripcion', 'cantidad', 'costoultimo', 'acciones'];
 
   constructor(private router: Router) {}
 
@@ -65,7 +65,7 @@ export class PedidoCompraFormComponent implements OnInit {
         codigobarra: '',
         desproducto: '',
         cantidad: 1,
-        costoulitmo: 0
+        costoultimo: 0
       };
     } else {
       this.snackBar.open('Complete todos los campos correctamente', 'Cerrar', { duration: 3000 });

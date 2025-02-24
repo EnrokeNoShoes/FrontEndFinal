@@ -4,7 +4,7 @@ export interface MDetallePedidoCompra {
     codigobarra: string;
     desproducto: string;
     cantidad: number;
-    costoulitmo: number;
+    costoultimo: number;
   }
   
   export interface MPedidoCompra {
