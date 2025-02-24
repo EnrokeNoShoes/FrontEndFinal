@@ -9,20 +9,39 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';  // Usar ReactiveFormsModule
 
 @Component({
   selector: 'app-pedidocompra-listado',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatTableModule, MatButtonModule, MatIconModule, MatInputModule, FormsModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    FormsModule,
+  ],
   templateUrl: './pedidocompra-listado.component.html',
-  styleUrls: ['./pedidocompra-listado.component.css']
+  styleUrls: ['./pedidocompra-listado.component.css'],
 })
 export class PedidosComponent implements OnInit {
   private pedidoCompraService = inject(PedidoCompraService);
+  private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
   public pedidos: MPedidoCompra[] = [];
   public pedidosFiltrados: MPedidoCompra[] = [];
-  private snackBar = inject(MatSnackBar);
-  public filtro: string = '';
+  public filtro: string = ''; // Campo de filtro para búsqueda
+
+  public formBuild = inject(FormBuilder);
+
+  // Formulario de filtro (opcional, pero útil para validaciones)
+  public filtroForm: FormGroup = this.formBuild.group({
+    numcomprobantepc: ['', Validators.required], // Aquí agregas el campo de filtro
+  });
+
   public displayedColumns: string[] = [
     'numcomprobantepc',
     'numcomprobante',
@@ -31,22 +50,23 @@ export class PedidosComponent implements OnInit {
     'fechapedido',
     'nomusu',
     'desestado',
-    'acciones'
+    'acciones',
   ];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.cargarPedidos();
+    this.cargarPedidos(); // Cargar pedidos al inicio
   }
 
+  // Función para cargar los pedidos desde el servicio
   private cargarPedidos() {
     this.pedidoCompraService.obtenerPedidos().subscribe({
       next: (data) => {
         console.log('Datos recibidos:', data);
 
         if (Array.isArray(data)) {
-          this.pedidos = data.map(item => ({
+          this.pedidos = data.map((item) => ({
             codpedidocompra: item.codpedidocompra,
             codsucursal: item.codsucursal,
             numsuc: item.numsuc,
@@ -62,60 +82,73 @@ export class PedidosComponent implements OnInit {
             codusu: item.codusu,
             nomusu: item.nomusu,
             acciones: item.acciones,
-            detalles: []
+            detalles: [],
           }));
-          this.pedidosFiltrados = [...this.pedidos];
+          this.pedidosFiltrados = [...this.pedidos]; // Duplicar para filtrar
         } else {
           console.warn('Formato de datos inesperado:', data);
         }
       },
       error: (err) => {
         console.error('Error al obtener datos:', err);
+      },
+    });
+  }
+
+  // Función para redirigir a la vista de crear nuevo pedido
+  nuevoRegistro() {
+    console.log('Intentando abrir formulario para nuevo registro');
+    this.router.navigate(['pedidocompra-nuevo']).then((success) => {
+      if (success) {
+        console.log('Navegación exitosa');
+      } else {
+        console.log('Error al navegar');
       }
     });
   }
 
-  nuevoRegistro() {
-    console.log('Abrir formulario para nuevo registro');
-    // Aquí iría la lógica para abrir un modal o navegar a una página de creación de pedidos
+  // Función para filtrar pedidos según el campo de filtro
+  filtrarPedidos() {
+    if (this.filtroForm.invalid) {
+      return;
+    }
+    const filtro = this.filtroForm.value.numcomprobantepc;
+    this.pedidosFiltrados = this.pedidos.filter((pedido) =>
+      pedido.numcomprobantepc.toLowerCase().includes(filtro.toLowerCase())
+    );
   }
 
+  // Modificar un pedido
   modificarPedido(pedido: MPedidoCompra) {
     console.log('Modificar pedido:', pedido);
     // Aquí iría la lógica para modificar el pedido
   }
 
+  // Anular un pedido
   anularPedido(codpedidocompra: number) {
     const codestado = 2; // Estado para "Anulado"
-    
+
     if (confirm('¿Estás seguro de que deseas anular este pedido?')) {
       this.pedidoCompraService.anularPedido(codpedidocompra, codestado).subscribe({
         next: (response) => {
-          alert(response.message);  // Mostrar mensaje de éxito
+          alert(response.message); // Mostrar mensaje de éxito
           this.cargarPedidos(); // Refrescar la lista después de anular
         },
         error: (err) => {
-          // En el error, solo recuperamos el mensaje
           if (err.status === 400 || err.status === 500 || err.status === 409) {
-            alert(err.error.message);  // Mostrar el mensaje de error
+            alert(err.error.message); // Mostrar mensaje de error
           } else {
-            // Si el error no tiene un código específico, mostramos un mensaje general
             console.error('Error desconocido:', err);
             alert('Hubo un error al procesar la solicitud. Intenta nuevamente más tarde.');
           }
-        }
+        },
       });
     }
   }
-  
+
+  // Imprimir un pedido
   imprimirPedido(pedido: MPedidoCompra) {
     console.log('Imprimir pedido:', pedido);
     // Aquí iría la lógica para imprimir el pedido
-  }
-
-  filtrarPedidos() {
-    this.pedidosFiltrados = this.pedidos.filter(pedido =>
-      pedido.numcomprobantepc.toLowerCase().includes(this.filtro.toLowerCase())
-    );
   }
 }

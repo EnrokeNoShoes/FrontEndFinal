@@ -1,30 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Importa los componentes
 import { LoginComponent } from './dashboard/acceso/login/login.component';
 import { PedidosComponent } from './dashboard/compras/pedidocompra/pedidocompra-listado/pedidocompra-listado.component';
 import { TipoIvaComponent } from './dashboard/referenciales/tipo-iva/tipo-iva.component';
-//import { DashboardComponent } from '../app/dashboard/dashboard/dashboard.component';
-import { authGuard } from './custom/auth.guard';
+import { PedidoCompraFormComponent } from './dashboard/compras/pedidocompra/pedidocompra-nuevo/pedidocompra-nuevo.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige al login por defecto
-  { path: 'login', component: LoginComponent }, // Ruta para login
+  { path: '', redirectTo: '/login', pathMatch: 'full' },  // Redirige al login por defecto
+  { path: 'login', component: LoginComponent },  // Ruta para login
   {
-    path: 'dashboard',
-    //component: DashboardComponent, // Dashboard como contenedor principal
-    canActivate: [authGuard], // Protege el acceso con guard (opcional)
+    path: 'dashboard',  // Ruta contenedora de todas las rutas hijas
     children: [
-      { path: 'pedidocompra', component: PedidosComponent }, // Ruta de pedidos
-      { path: 'tipoiva', component: TipoIvaComponent }, // Ruta de tipo IVA
+      { path: 'pedidocompra', component: PedidosComponent },  // Ruta de listado de pedidos
+      { path: 'nuevo-pedidocompra', component: PedidoCompraFormComponent },  // Ruta para nuevo pedido
+      { path: 'tipoiva', component: TipoIvaComponent },  // Ruta para tipo IVA
     ]
   },
-  { path: '**', redirectTo: '/login' } // Redirige a login si la ruta no existe
+  { path: '**', redirectTo: '/login' }  // Ruta para 404, redirige al login
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)], // Configura las rutas
-  exports: [RouterModule] // Exporta el RouterModule para usarlo en otras partes de la app
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

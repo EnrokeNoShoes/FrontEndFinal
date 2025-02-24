@@ -1,1 +1,108 @@
-<p>pedidocompra-nuevo works!</p>
+<div class="card-container">
+  <mat-card>
+    <mat-card-header class="header">
+      <mat-card-title>PEDIDO COMPRA</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <mat-card>
+    
+
+    <mat-card-content>
+      <form (ngSubmit)="grabarRegistro()">
+        <!-- Formulario de datos principales -->
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha Pedido</mat-label>
+            <input matInput type="date" [(ngModel)]="pedido.fechapedido" name="fecha" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo Comprobante</mat-label>
+            <input matInput [(ngModel)]="pedido.numcomprobante" name="numcomprobante" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario Carga</mat-label>
+            <input matInput [(ngModel)]="pedido.nomusu" name="usuario" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nro. Pedido</mat-label>
+            <input matInput [(ngModel)]="pedido.numcomprobantepc" name="nropedido" required>
+          </mat-form-field>
+        </div>
+
+        <!-- Formulario de detalles del pedido -->
+        <div class="details-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Código Barra</mat-label>
+            <input matInput [(ngModel)]="nuevoDetalle.codigobarra" name="codbarra">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input matInput [(ngModel)]="nuevoDetalle.codproducto" name="descriarticulo">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Cantidad</mat-label>
+            <input matInput type="number" [(ngModel)]="nuevoDetalle.cantidad" name="cantidad">
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" class="add-button" (click)="agregarLinea()">Agregar Línea</button>
+
+        <!-- Tabla de detalles del pedido -->
+        <div class="table-container">
+          <table mat-table [dataSource]="pedido.detalles" class="mat-elevation-z8 custom-table">
+            <ng-container matColumnDef="codbarra">
+              <th mat-header-cell *matHeaderCellDef> Código Barra </th>
+              <td mat-cell *matCellDef="let detalle"> {{ detalle.codbarra }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="descripcion">
+              <th mat-header-cell *matHeaderCellDef> Descripción </th>
+              <td mat-cell *matCellDef="let detalle"> {{ detalle.descriarticulo }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+              <td mat-cell *matCellDef="let detalle"> {{ detalle.cantidad }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <td mat-cell *matCellDef="let detalle">
+                <button mat-icon-button color="warn" (click)="eliminarLinea(detalle)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+
+        <!-- Botones para cancelar o grabar el registro -->
+        <div class="button-group">
+          <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+          <button mat-raised-button color="primary" type="submit">Grabar Registro</button>
+        </div>
+
+        <!-- Sección de Totales del Pedido -->
+        <div class="total-section">
+          <div>
+            <span>Cantidad:</span>
+            <span>{{ pedido.detalles.length }}</span>
+          </div>
+          <div>
+            <span>Total gs:</span>
+            <!--<span>{{ calcularTotal() | currency }}</span>-->
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
