@@ -1,0 +1,82 @@
+<div class="card-container">
+    <mat-card>
+        <mat-card-header class="header">
+            <mat-card-title>PRESUPUESTO COMPRA</mat-card-title>
+            <button mat-raised-button color="primary" (click)="nuevoRegistro()">Nuevo Registro</button>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-form-field appearance="outline" class="full-width">
+                <input matInput [(ngModel)]="filtro" (input)="filtrarPresupuesto()" placeholder="Buscar número presupuesto">
+            </mat-form-field>
+
+            <table mat-table [dataSource]="presupuestocFiltrados" class="mat-elevation-z8">
+                
+                <ng-container matColumnDef="numpresupuestoc">
+                    <th mat-header-cell *matHeaderCellDef> Num. Presupuesto </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.numpresupuestoc }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="numcomprobante">
+                    <th mat-header-cell *matHeaderCellDef> Tipo Comprobante </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.numcomprobante }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="numsuc">
+                    <th mat-header-cell *matHeaderCellDef> Nro. Sucursal </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.numsuc }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dessuc">
+                    <th mat-header-cell *matHeaderCellDef> Sucursal </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.dessuc }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nomusu">
+                    <th mat-header-cell *matHeaderCellDef> Usuario Carga </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.nomusu }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fechapresupuesto">
+                    <th mat-header-cell *matHeaderCellDef> Fecha Presupuesto </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.fechapresupuesto | date:'dd/MM/yyyy' }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalpresupuesto">
+                    <th mat-header-cell *matHeaderCellDef> Total Presupuesto </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.totalpresupuesto }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="desmoneda">
+                    <th mat-header-cell *matHeaderCellDef> Moneda </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.desmoneda }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="desmodalidad">
+                    <th mat-header-cell *matHeaderCellDef> Modalidad </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.desmodalidad }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="desestado">
+                    <th mat-header-cell *matHeaderCellDef> Estado </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.desestado }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> Opciones </th>
+                    <td mat-cell *matCellDef="let pedido">
+                        <button mat-icon-button color="warn" (click)="anularPresupuesto(pedido.codpresupuestocompra)">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                        <button mat-icon-button color="accent" (click)="imprimirPresupuesto(pedido)">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</div>

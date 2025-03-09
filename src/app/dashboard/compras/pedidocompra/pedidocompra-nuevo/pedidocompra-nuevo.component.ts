@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PedidoCompraService } from '../../../../services/compras/pedidocompra.service';
-import { MPedidoCompra, MDetallePedidoCompra } from '../../../../interfaces/compras/pedidocompra';
+import { MPedidoCompra, MDetallePedidoCompra } from '../../../../interfaces/compras/pedidocompra/pedidocompra';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';

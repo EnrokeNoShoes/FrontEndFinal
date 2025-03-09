@@ -1,0 +1,7 @@
+crear componente
+ng generate component compra/presuepuestocompra/presupuestocompra-lista
+
+
+crear servicio
+ng generate service services/compras/presupuestocompra
+

@@ -88,7 +88,7 @@ iniciarSesion() {
     next: (data) => {
       if (data.isSuccess) {
         localStorage.setItem("token", data.token);
-        this.router.navigate(['pedidocompra']); 
+        this.router.navigate(['presupuestocompralista']); 
       } else {
         alert("Credenciales incorrectas");
       }
