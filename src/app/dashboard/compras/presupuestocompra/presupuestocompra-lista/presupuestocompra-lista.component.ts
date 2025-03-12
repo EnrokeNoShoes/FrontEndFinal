@@ -45,14 +45,13 @@ export class PresupuestocompraListaComponent {
     'numcomprobante',
     'numpresupuestoc',
     'fechapresupuesto',
-    'totalpresupuesto',
     'numproveedor',
     'razonsocial',
     'numsuc',
     'dessucu',
     'nomusu',
-    'desmodalidad',
     'desmoneda',
+    'totalpresupuesto',
     'desestado',
     'acciones',
   ];
@@ -131,7 +130,7 @@ export class PresupuestocompraListaComponent {
 
     nuevoRegistro() {
       console.log('Intentando abrir formulario para nuevo registro');
-      this.router.navigate(['presupuestocompra-nuevo']).then((success) => {
+      this.router.navigate(['presupuestocompranuevo']).then((success) => {
         if (success) {
           console.log('Navegación exitosa');
         } else {

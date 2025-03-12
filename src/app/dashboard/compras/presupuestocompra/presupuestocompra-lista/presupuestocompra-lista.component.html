@@ -22,14 +22,24 @@
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.numcomprobante }} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="numproveedor">
+                    <th mat-header-cell *matHeaderCellDef> Proveedor </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.numproveedor }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="razonsocial">
+                    <th mat-header-cell *matHeaderCellDef> Razon social </th>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.razonsocial }} </td>
+                </ng-container>
+
                 <ng-container matColumnDef="numsuc">
                     <th mat-header-cell *matHeaderCellDef> Nro. Sucursal </th>
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.numsuc }} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="dessuc">
+                <ng-container matColumnDef="dessucu">
                     <th mat-header-cell *matHeaderCellDef> Sucursal </th>
-                    <td mat-cell *matCellDef="let pedido"> {{ pedido.dessuc }} </td>
+                    <td mat-cell *matCellDef="let pedido"> {{ pedido.dessucu }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="nomusu">
@@ -52,10 +62,6 @@
                     <td mat-cell *matCellDef="let pedido"> {{ pedido.desmoneda }} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="desmodalidad">
-                    <th mat-header-cell *matHeaderCellDef> Modalidad </th>
-                    <td mat-cell *matCellDef="let pedido"> {{ pedido.desmodalidad }} </td>
-                </ng-container>
 
                 <ng-container matColumnDef="desestado">
                     <th mat-header-cell *matHeaderCellDef> Estado </th>
