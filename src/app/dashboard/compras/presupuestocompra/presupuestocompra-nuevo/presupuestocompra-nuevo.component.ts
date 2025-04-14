@@ -63,11 +63,35 @@ export class PresupuestocompraNuevoComponent {
       cantidad: 0
     };
 
-  public displayedColumns: string[] = ['codbarra', 'descripcion', 'cantidad', 'iva', 'precioneto','preciocompra', 'acciones'];
+  public displayedColumns: string[] = ['codbarra', 'descripcion', 'cantidad', 'precioneto','preciocompra', 'acciones'];
+  
+  agregarLinea() {
+    if (this.detalle.codigobarra && this.detalle.desproducto && (this.detalle.preciocompra ?? 0) > 0 && (this.detalle.precioneto ?? 0) > 0 && (this.detalle.cantidad ?? 0) > 0) {
+      (this.cabecera.detalles ??= []).push({ ...this.detalle });
+      this.detalle = { 
+        codpresupuestocompra: this.detalle.codpresupuestocompra,
+        codproducto: 0,
+        codigobarra: '',
+        desproducto: '',
+        cantidad: 1,
+        preciocompra: 0,
+        precioneto: 0,
+      };
+    } else {
+      this.snackBar.open('Complete todos los campos correctamente', 'Cerrar', { duration: 3000 });
+    }
+  }
 
+  eliminarLinea(index: number) {
+    (this.cabecera.detalles ??= []).splice(index, 1);
+  }
 
   constructor(private router: Router) {};
   cancelar() {
   this.router.navigate(['presupuestocompralista']);
+  }
+
+  grabarRegistro(){
+
   }
 }

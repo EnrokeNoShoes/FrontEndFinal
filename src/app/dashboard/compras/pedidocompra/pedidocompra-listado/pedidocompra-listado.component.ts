@@ -39,11 +39,11 @@ export class PedidosComponent implements OnInit {
 
   // Formulario de filtro (opcional, pero útil para validaciones)
   public filtroForm: FormGroup = this.formBuild.group({
-    numcomprobantepc: ['', Validators.required], // Aquí agregas el campo de filtro
+    numpedidocompra: ['', Validators.required], // Aquí agregas el campo de filtro
   });
 
   public displayedColumns: string[] = [
-    'numcomprobantepc',
+    'numpedidocompra',
     'numcomprobante',
     'numsuc',
     'dessuc',
@@ -75,7 +75,7 @@ export class PedidosComponent implements OnInit {
             codcomprobante: item.codcomprobante,
             numcomprobante: item.numcomprobante,
             descomprobante: item.descomprobante,
-            numcomprobantepc: item.numcomprobantepc,
+            numpedidocompra: item.numpedidocompra,
             codestado: item.codestado,
             numestado: item.numestado,
             desestado: item.desestado,
@@ -99,11 +99,7 @@ export class PedidosComponent implements OnInit {
   nuevoRegistro() {
     console.log('Intentando abrir formulario para nuevo registro');
     this.router.navigate(['pedidocompra-nuevo']).then((success) => {
-      if (success) {
-        console.log('Navegación exitosa');
-      } else {
-        console.log('Error al navegar');
-      }
+      console.log('Navegación exitosa');
     });
   }
 
@@ -111,7 +107,7 @@ export class PedidosComponent implements OnInit {
   filtrarPedidos() {  
     const filtro = this.filtro.toLowerCase();
     this.pedidosFiltrados = this.pedidos.filter((pedido) => {
-      const numComprobantePc = pedido.numcomprobantepc?.toString().toLowerCase() || '';
+      const numComprobantePc = pedido.numpedidocompra?.toString().toLowerCase() || '';
       return numComprobantePc.includes(filtro);
     });
   }
@@ -126,7 +122,7 @@ export class PedidosComponent implements OnInit {
   // Anular un pedido
   anularPedido(codpedidocompra: number) {
     const codestado = 2; // Estado para "Anulado"
-
+    console.log('Modificar pedido:', codpedidocompra);
     if (confirm('¿Estás seguro de que deseas anular este pedido?')) {
       this.pedidoCompraService.anularPedido(codpedidocompra, codestado).subscribe({
         next: (response) => {

@@ -16,7 +16,7 @@ export interface MDetallePedidoCompra {
     codcomprobante: number;
     numcomprobante: string;
     descomprobante: string;
-    numcomprobantepc: string;
+    numpedidocompra: string;
     codestado: number;
     numestado: string;
     desestado: string;

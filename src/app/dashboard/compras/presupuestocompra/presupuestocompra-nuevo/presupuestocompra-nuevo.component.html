@@ -1,1 +1,138 @@
-<p>presupuestocompra-nuevo works!</p>
+<div class="card-container">
+    <mat-card>
+      <mat-card-header class="header">
+        <mat-card-title>PRESUPUESTO COMPRA</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <mat-card>
+      
+  
+      <mat-card-content>
+        <form (ngSubmit)="grabarRegistro()">
+          <!-- Formulario de datos principales -->
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha Presupuesto</mat-label>
+              <input matInput type="date" [(ngModel)]="cabecera.fechapresupuesto" name="fechapresupuesto" required>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Nro. Sucursal</mat-label>
+              <input matInput [(ngModel)]="cabecera.numsuc" name="numsuc" readonly>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo Comprobante</mat-label>
+              <input matInput [(ngModel)]="cabecera.numcomprobante" name="numcomprobante" required>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Nro. Presupuesto</mat-label>
+              <input matInput [(ngModel)]="cabecera.numpresupuestoc" name="numpresupuestoc" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Moneda</mat-label>
+                <input matInput [(ngModel)]="cabecera.desmoneda" name="desmoneda" required>
+              </mat-form-field>
+           </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario Carga</mat-label>
+            <input matInput [(ngModel)]="cabecera.nomusu" name="usuario" required>
+          </mat-form-field>
+  
+          <!-- Formulario de detalles del pedido -->
+          <div class="details-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Código Barra</mat-label>
+              <input matInput [(ngModel)]="detalle.codigobarra" name="codbarra">
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Descripción</mat-label>
+              <input matInput [(ngModel)]="detalle.codproducto" name="descriarticulo">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Precio Compra</mat-label>
+                <input matInput type="number" [(ngModel)]="detalle.preciocompra" name="preciocompra">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Precio Neto</mat-label>
+                <input matInput type="number" [(ngModel)]="detalle.precioneto" name="precioneto">
+              </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Cantidad</mat-label>
+              <input matInput type="number" [(ngModel)]="detalle.cantidad" name="cantidad">
+            </mat-form-field>
+            
+          </div>
+  
+          <button mat-raised-button color="primary" class="add-button" (click)="agregarLinea()">Agregar Línea</button>
+  
+          <!-- Tabla de detalles del pedido -->
+          <div class="table-container">
+            <table mat-table [dataSource]="cabecera.detalles ?? []" class="mat-elevation-z8 custom-table">
+              <ng-container matColumnDef="codbarra">
+                <th mat-header-cell *matHeaderCellDef> Código Barra </th>
+                <td mat-cell *matCellDef="let detalle"> {{ detalle.codbarra }} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                <td mat-cell *matCellDef="let detalle"> {{ detalle.desproducto }} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="precioneto">
+                <th mat-header-cell *matHeaderCellDef> Precio Neto </th>
+                <td mat-cell *matCellDef="let detalle"> {{ detalle.precioneto }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="preciocompra">
+                <th mat-header-cell *matHeaderCellDef> Precio Bruto </th>
+                <td mat-cell *matCellDef="let detalle"> {{ detalle.preciocompra }} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="cantidad">
+                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                <td mat-cell *matCellDef="let detalle"> {{ detalle.cantidad }} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let detalle">
+                  <button mat-icon-button color="warn" (click)="eliminarLinea(detalle)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+  
+          <!-- Botones para cancelar o grabar el registro -->
+          <div class="button-group">
+            <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+            <button mat-raised-button color="primary" type="submit">Grabar Registro</button>
+          </div>
+  
+          <!-- Sección de Totales del Pedido -->
+          <div class="total-section">
+            <div>
+              <span>Total gs:</span><br><br>
+              <!--<span>{{ calcularTotal() | currency }}</span>-->
+              <span>Cantidad:</span>
+              <!--<span>{{ cabecera.detalles.length }}</span>-->
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
